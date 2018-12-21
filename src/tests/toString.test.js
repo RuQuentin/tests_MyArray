@@ -2,7 +2,7 @@ import MyArray from '../index';
 
 
 describe('tests for method toString', () => {
-  let arr;
+  let arr = 0;
 
   beforeEach(() => {
     arr = new MyArray(1, 2, 3, 4);
@@ -14,7 +14,7 @@ describe('tests for method toString', () => {
   });
 
   test('instance has not Own Property toString', () => {
-    expect(arr.hasOwnProperty('toString')).toBeFalsy();
+    Object.prototype.hasOwnProperty.call(arr, 'toString').toBeFalsy();
   });
 
   test('the toString result of empty arr must be an empty string and not undefined', () => {
@@ -30,5 +30,5 @@ describe('tests for method toString', () => {
 
   test('returns a comma separated list of elements', () => {
     expect(arr.toString()).toBe('1,2,3,4');
-  })
+  });
 });

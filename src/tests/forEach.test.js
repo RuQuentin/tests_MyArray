@@ -2,7 +2,7 @@ import MyArray from '../index.js';
 
 
 describe('tests for method forEach', () => {
-  let arr;
+  let arr = 0;
 
   beforeEach(() => {
     arr = new MyArray(1, 4, 0);
@@ -14,7 +14,7 @@ describe('tests for method forEach', () => {
   });
 
   test('instance has not Own Property forEach ', () => {
-    expect(arr.hasOwnProperty('forEach')).toBeFalsy();
+    Object.prototype.hasOwnProperty.call(arr, 'forEach').toBeFalsy();
   });
 
   test('does not mutate initial arr if we do nothing inside the cb ', () => {
@@ -23,7 +23,7 @@ describe('tests for method forEach', () => {
     expect(arr).toEqual(new MyArray(1, 4, 0));
   });
 
-  test("if custom context doesn't provided, use current context ", () => {
+  test('if custom context doesn`t provided, use current context ', () => {
     const testArr = [];
     const user = {
       name: 'ivan',
@@ -73,32 +73,31 @@ describe('tests for method forEach', () => {
     expect(arr.forEach(mockCallback)).toBeUndefined();
   });
 
-  test('thisArg is set as this of callbackFunction properly for forEach method ', () => {
+  test('thisArg is set as this of callbackfunctionproperly for forEach method ', () => {
     const testArr = [];
-    const user = {
-      name: 'ivan',
-      testForEach() {
-        arr.forEach(function () {
-            testArr.push(this.name)
-        }, user2);
-      }
-    };
     const user2 = {
       name: 'ivan2'
     };
+    const user = {
+      name: 'ivan',
+      testForEach() {
+        arr.forEach(function() {
+          testArr.push(this.name);
+        }, user2);
+      }
+    };
+
 
     user.testForEach();
 
     expect(testArr).toEqual(['ivan2', 'ivan2', 'ivan2']);
   });
 
-  test("if callback isn't a function, throw error", () => {
+  test('if callback isn`t a function, throw error', () => {
     const callback = 1;
-    
+
     expect(() => {
       arr.forEach(callback);
     }).toThrow(TypeError);
   });
-
-
-})
+});
