@@ -2,7 +2,7 @@ import MyArray from '../index';
 
 
 describe('tests for method pop', () => {
-  let arr;
+  let arr = 0;
 
   beforeEach(() => {
     arr = new MyArray(1, 4, 0);
@@ -14,7 +14,7 @@ describe('tests for method pop', () => {
   });
 
   test('instance has not Own Property pop', () => {
-    expect(arr.hasOwnProperty('pop')).toBeFalsy();
+    Object.prototype.hasOwnProperty.call(arr, 'pop').toBeFalsy();
   });
 
   test('method must return deleted element', () => {
