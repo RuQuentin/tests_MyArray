@@ -107,9 +107,13 @@ MyArray.prototype.reduce = function(callback, initValue) {
   let accumulator = initValue ? initValue : 0;
   const arrLength = this.length;
 
+  if (arrLength === 0 && initValue === undefined) {
+    throw new TypeError('You haven`t passed any value needed');
+  }
+
   if (arrLength > 0) {
     for (let i = 0; i < arrLength; i++) {
-      accumulator = callback(accumulator, this[i], i, this);
+      accumulator += callback(this[i], i, this);
     }
   }
   return accumulator;
