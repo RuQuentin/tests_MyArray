@@ -165,7 +165,7 @@ MyArray.prototype.sort = function(callback) {
       let flag = 0;
 
       for (let i = 0; i < arrLength - 1; i++) {
-        if (callback(this[i], this[String(i + 1)]) < 0) {
+        if (callback(this[i], this[String(i + 1)]) > 0) {
           buffer = this[i];
           this[i] = this[String(i + 1)];
           this[String(i + 1)] = buffer;
