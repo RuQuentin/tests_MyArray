@@ -2,7 +2,7 @@ import MyArray from '../index';
 
 
 describe('tests for method pop', () => {
-  let arr = 0;
+  let arr = null;
 
   beforeEach(() => {
     arr = new MyArray(1, 4, 0);
