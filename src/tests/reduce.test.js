@@ -11,7 +11,7 @@ describe('tests for method reduce', () => {
   test('instance has not own property reduce', () => {
     const arr = new MyArray(1, 4, 0);
 
-    Object.prototype.hasOwnProperty.call(arr, 'reduce').toBeFalsy();
+    expect(Object.prototype.hasOwnProperty.call(arr, 'reduce')).toBeFalsy();
   });
 
   test('Method shouldn`t mutate initial array', () => {
@@ -57,7 +57,7 @@ describe('tests for method reduce', () => {
     expect(callReduceOnEmptyArray).toThrow(TypeError);
   });
 
-  test.only(`the number of callback function calls should be equal to the arr.length
+  test(`the number of callback function calls should be equal to the arr.length
   with init value and arr.length-1 without`, () => {
     const arr = new MyArray(1, 2, 3, 5);
     const mockCallbackWithInitValue = jest.fn();
