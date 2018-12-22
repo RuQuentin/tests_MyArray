@@ -11,7 +11,7 @@ describe('tests for method sort', () => {
   test('arr has not own property sort', () => {
     const arr = new MyArray(1, 4, 0);
 
-    Object.prototype.hasOwnProperty.call(arr, 'sort').toBeFalsy();
+    expect(Object.prototype.hasOwnProperty.call(arr, 'sort')).toBeFalsy();
   });
 
   test('throw error if comparator is not a function or undefined', () => {

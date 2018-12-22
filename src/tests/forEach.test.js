@@ -2,7 +2,7 @@ import MyArray from '../index.js';
 
 
 describe('tests for method forEach', () => {
-  let arr = 0;
+  let arr = null;
 
   beforeEach(() => {
     arr = new MyArray(1, 4, 0);
@@ -14,7 +14,7 @@ describe('tests for method forEach', () => {
   });
 
   test('instance has not Own Property forEach ', () => {
-    Object.prototype.hasOwnProperty.call(arr, 'forEach').toBeFalsy();
+    expect(Object.prototype.hasOwnProperty.call(arr, 'forEach')).toBeFalsy();
   });
 
   test('does not mutate initial arr if we do nothing inside the cb ', () => {
