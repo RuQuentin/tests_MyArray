@@ -209,6 +209,29 @@ MyArray.prototype.toString = function() {
   return newString;
 };
 
+// ===================== FIND =====================
+MyArray.prototype.find = function(callback, thisArg) {
+  const arrLength = this.length;
+
+  if (thisArg) {
+    for (let i = 0; i < arrLength; i += 1) {
+      if (callback.call(thisArg, this[i], i, this)) {
+        const targetElement = this[i];
+
+        return targetElement;
+      }
+    }
+  } else {
+    for (let i = 0; i < arrLength; i++) {
+      if (callback(this[i], i, this)) {
+        const targetElement = this[i];
+
+        return targetElement;
+      }
+    }
+  }
+};
+
 // ===================== REST =====================
 // MyArray.prototype[Symbol.iterator] = function() {
 //   let i = 0;
