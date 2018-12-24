@@ -73,15 +73,10 @@ MyArray.from = function(arrayLike, callback, thisArg) {
 MyArray.prototype.map = function(callback, thisArg) {
   const newArray = new MyArray();
   const arrLength = this.length;
+  const context = thisArg ? thisArg : this;
 
-  if (thisArg) {
-    for (let i = 0; i < arrLength; i += 1) {
-      newArray.push(callback.call(thisArg, this[i], i, this));
-    }
-  } else {
-    for (let i = 0; i < arrLength; i++) {
-      newArray.push(callback(this[i], i, this));
-    }
+  for (let i = 0; i < arrLength; i += 1) {
+    newArray.push(callback.call(context, this[i], i, this));
   }
 
   return newArray;
