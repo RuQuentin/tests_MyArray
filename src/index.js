@@ -28,7 +28,7 @@ MyArray.prototype.push = function(...argumentsArr) {
   const argLength = argumentsArr.length;
 
   for (let i = 0; i < argLength; i += 1) {
-    this[String(this.length)] = argumentsArr[i];
+    this[this.length] = argumentsArr[i];
     this.length += 1;
   }
   return this.length;
@@ -36,8 +36,8 @@ MyArray.prototype.push = function(...argumentsArr) {
 
 // ===================== POP =====================
 MyArray.prototype.pop = function() {
-  const lastItem = this[String(this.length - 1)];
-  delete this[String(this.length - 1)];
+  const lastItem = this[this.length - 1];
+  delete this[this.length - 1];
 
   if (this.length) {
     this.length -= 1;
@@ -127,7 +127,8 @@ MyArray.prototype.filter = function(callback, thisArg) {
 
 // =================== SORT ===================
 MyArray.prototype.sort = function(callback) {
-  let buffer = this[String(0)];
+
+  let buffer = this[0];
 
   switch (callback) {
   case undefined:
@@ -135,10 +136,10 @@ MyArray.prototype.sort = function(callback) {
       let flag = 0;
 
       for (let i = 0; i < this.length - 1; i++) {
-        if (String(this[i]) > String(this[String(i + 1)])) {
+        if (String(this[i]) > String(this[i + 1])) {
           buffer = this[i];
-          this[i] = this[String(i + 1)];
-          this[String(i + 1)] = buffer;
+          this[i] = this[i + 1];
+          this[i + 1] = buffer;
           flag += 1;
         }
       }
@@ -154,10 +155,10 @@ MyArray.prototype.sort = function(callback) {
       let flag = 0;
 
       for (let i = 0; i < this.length - 1; i++) {
-        if (callback(this[i], this[String(i + 1)]) > 0) {
+        if (callback(this[i], this[i + 1]) > 0) {
           buffer = this[i];
-          this[i] = this[String(i + 1)];
-          this[String(i + 1)] = buffer;
+          this[i] = this[i + 1];
+          this[i + 1] = buffer;
           flag += 1;
         }
       }
@@ -176,7 +177,7 @@ MyArray.prototype.toString = function() {
     return '';
   }
 
-  let newString = String(this[String(0)]);
+  let newString = String(this[0]);
 
   for (let i = 1; i < this.length; i++) {
     newString = `${newString},${this[i]}`;
@@ -242,7 +243,7 @@ MyArray.prototype.slice = function(begin, end) {
 //       if (i < arrLength) {
 //         return {
 //           done: false,
-//           value: that[String(i++)]
+//           value: that[i++]
 //         };
 //       } else {
 //         return {
