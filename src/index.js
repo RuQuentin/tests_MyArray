@@ -94,14 +94,12 @@ MyArray.prototype.map = function(callback, thisArg) {
 
 // =================== forEach ===================
 MyArray.prototype.forEach = function(callback, thisArg) {
-  const arrLength = this.length;
-
   if (thisArg) {
-    for (let i = 0; i < arrLength; i += 1) {
+    for (let i = 0; i < this.length; i += 1) {
       callback.call(thisArg, this[i], i, this);
     }
   } else {
-    for (let i = 0; i < arrLength; i++) {
+    for (let i = 0; i < this.length; i++) {
       callback(this[i], i, this);
     }
   }
