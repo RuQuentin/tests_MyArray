@@ -198,6 +198,39 @@ MyArray.prototype.find = function(callback, thisArg) {
   }
 };
 
+MyArray.prototype.slice = function(begin, end) {
+  const newArray = new MyArray();
+  const arrLength = this.length;
+  let from = 0;
+  let to = arrLength;
+
+  if (begin > arrLength) {
+    return newArray;
+  }
+
+  if (begin > 0) {
+    from = begin;
+  }
+
+  if (begin < 0 && Math.abs(begin) < arrLength) {
+    from = arrLength + begin;
+  }
+
+  if (end < 0) {
+    to = arrLength + end;
+  }
+
+  if (end >= 0 && end <= arrLength) {
+    to = end;
+  }
+
+  for (let i = from; i < to; i++) {
+    newArray.push(this[i]);
+  }
+
+  return newArray;
+};
+
 // ===================== REST =====================
 // MyArray.prototype[Symbol.iterator] = function() {
 //   let i = 0;
