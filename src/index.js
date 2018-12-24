@@ -77,14 +77,13 @@ MyArray.from = function(arrayLike, callback, thisArg) {
 // ===================== MAP =====================
 MyArray.prototype.map = function(callback, thisArg) {
   const newArray = new MyArray();
-  const arrLength = this.length;
 
   if (thisArg) {
-    for (let i = 0; i < arrLength; i += 1) {
+    for (let i = 0; i < this.length; i += 1) {
       newArray.push(callback.call(thisArg, this[i], i, this));
     }
   } else {
-    for (let i = 0; i < arrLength; i++) {
+    for (let i = 0; i < this.length; i++) {
       newArray.push(callback(this[i], i, this));
     }
   }
