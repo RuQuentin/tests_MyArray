@@ -50,7 +50,7 @@ MyArray.prototype.pop = function() {
 MyArray.from = function(arrayLike, callback, thisArg) {
   const newArray = new MyArray();
   const argLength = arrayLike.length;
-  const context = thisArg ? thisArg : this;
+  const context = thisArg !== undefined ? thisArg : this;
 
   if (callback) {
     for (let i = 0; i < argLength; i += 1) {
@@ -73,7 +73,7 @@ MyArray.from = function(arrayLike, callback, thisArg) {
 MyArray.prototype.map = function(callback, thisArg) {
   const newArray = new MyArray();
   const arrLength = this.length;
-  const context = thisArg ? thisArg : this;
+  const context = thisArg !== undefined ? thisArg : this;
 
   for (let i = 0; i < arrLength; i += 1) {
     newArray.push(callback.call(context, this[i], i, this));
@@ -85,7 +85,7 @@ MyArray.prototype.map = function(callback, thisArg) {
 // =================== forEach ===================
 MyArray.prototype.forEach = function(callback, thisArg) {
   const arrLength = this.length;
-  const context = thisArg ? thisArg : this;
+  const context = thisArg !== undefined ? thisArg : this;
 
   for (let i = 0; i < arrLength; i += 1) {
     callback.call(context, this[i], i, this);
@@ -122,7 +122,7 @@ MyArray.prototype.reduce = function(callback, initValue) {
 MyArray.prototype.filter = function(callback, thisArg) {
   const newArray = new MyArray();
   const arrLength = this.length;
-  const context = thisArg ? thisArg : this;
+  const context = thisArg !== undefined ? thisArg : this;
 
   for (let i = 0; i < arrLength; i += 1) {
     if (callback.call(context, this[i], i, this)) {
@@ -199,7 +199,7 @@ MyArray.prototype.toString = function() {
 // ===================== FIND =====================
 MyArray.prototype.find = function(callback, thisArg) {
   const arrLength = this.length;
-  const context = thisArg ? thisArg : this;
+  const context = thisArg !== undefined ? thisArg : this;
 
   for (let i = 0; i < arrLength; i += 1) {
     if (callback.call(context, this[i], i, this)) {
