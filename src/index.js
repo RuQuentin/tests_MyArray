@@ -199,22 +199,13 @@ MyArray.prototype.toString = function() {
 // ===================== FIND =====================
 MyArray.prototype.find = function(callback, thisArg) {
   const arrLength = this.length;
+  const context = thisArg ? thisArg : this;
 
-  if (thisArg) {
-    for (let i = 0; i < arrLength; i += 1) {
-      if (callback.call(thisArg, this[i], i, this)) {
-        const targetElement = this[i];
+  for (let i = 0; i < arrLength; i += 1) {
+    if (callback.call(context, this[i], i, this)) {
+      const targetElement = this[i];
 
-        return targetElement;
-      }
-    }
-  } else {
-    for (let i = 0; i < arrLength; i++) {
-      if (callback(this[i], i, this)) {
-        const targetElement = this[i];
-
-        return targetElement;
-      }
+      return targetElement;
     }
   }
 };
