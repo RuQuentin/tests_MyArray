@@ -49,27 +49,25 @@ MyArray.prototype.pop = function() {
 // ===================== FROM =====================
 MyArray.from = function(arrayLike, callback, thisArg) {
   const newArray = new MyArray();
-  const argLength = arrayLike.length;
+  newArray.length = arrayLike.length;
 
   if (thisArg) {
-    for (let i = 0; i < argLength; i += 1) {
+    for (let i = 0; i < newArray.length; i += 1) {
       newArray[i] = callback.call(thisArg, arrayLike[i], i, arrayLike);
     }
   }
 
   if (callback && !thisArg) {
-    for (let i = 0; i < argLength; i += 1) {
+    for (let i = 0; i < newArray.length; i += 1) {
       newArray[i] = callback(arrayLike[i], i, arrayLike);
     }
   }
 
   if (!callback && !thisArg) {
-    for (let i = 0; i < argLength; i += 1) {
+    for (let i = 0; i < newArray.length; i += 1) {
       newArray[i] = arrayLike[i];
     }
   }
-
-  newArray.length = argLength;
 
   return newArray;
 };
