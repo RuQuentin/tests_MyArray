@@ -135,16 +135,15 @@ MyArray.prototype.reduce = function(callback, initValue) {
 // ===================== FILTER =====================
 MyArray.prototype.filter = function(callback, thisArg) {
   const newArray = new MyArray();
-  const arrLength = this.length;
 
   if (thisArg) {
-    for (let i = 0; i < arrLength; i += 1) {
+    for (let i = 0; i < this.length; i += 1) {
       if (callback.call(thisArg, this[i], i, this)) {
         newArray.push(this[i]);
       }
     }
   } else {
-    for (let i = 0; i < arrLength; i++) {
+    for (let i = 0; i < this.length; i++) {
       if (callback(this[i], i, this)) {
         newArray.push(this[i]);
       }
