@@ -85,16 +85,12 @@ MyArray.prototype.map = function(callback, thisArg) {
 // =================== forEach ===================
 MyArray.prototype.forEach = function(callback, thisArg) {
   const arrLength = this.length;
+  const context = thisArg ? thisArg : this;
 
-  if (thisArg) {
-    for (let i = 0; i < arrLength; i += 1) {
-      callback.call(thisArg, this[i], i, this);
-    }
-  } else {
-    for (let i = 0; i < arrLength; i++) {
-      callback(this[i], i, this);
-    }
+  for (let i = 0; i < arrLength; i += 1) {
+    callback.call(context, this[i], i, this);
   }
+
   return undefined;
 };
 
