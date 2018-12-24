@@ -50,16 +50,11 @@ MyArray.prototype.pop = function() {
 MyArray.from = function(arrayLike, callback, thisArg) {
   const newArray = new MyArray();
   const argLength = arrayLike.length;
+  const context = thisArg ? thisArg : this;
 
-  if (thisArg) {
+  if (callback) {
     for (let i = 0; i < argLength; i += 1) {
-      newArray[i] = callback.call(thisArg, arrayLike[i], i, arrayLike);
-    }
-  }
-
-  if (callback && !thisArg) {
-    for (let i = 0; i < argLength; i += 1) {
-      newArray[i] = callback(arrayLike[i], i, arrayLike);
+      newArray[i] = callback.call(context, arrayLike[i], i, arrayLike);
     }
   }
 
