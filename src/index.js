@@ -218,10 +218,8 @@ MyArray.prototype.toString = function() {
 
 // ===================== FIND =====================
 MyArray.prototype.find = function(callback, thisArg) {
-  const arrLength = this.length;
-
   if (thisArg) {
-    for (let i = 0; i < arrLength; i += 1) {
+    for (let i = 0; i < this.length; i += 1) {
       if (callback.call(thisArg, this[i], i, this)) {
         const targetElement = this[i];
 
@@ -229,7 +227,7 @@ MyArray.prototype.find = function(callback, thisArg) {
       }
     }
   } else {
-    for (let i = 0; i < arrLength; i++) {
+    for (let i = 0; i < this.length; i++) {
       if (callback(this[i], i, this)) {
         const targetElement = this[i];
 
