@@ -1,17 +1,16 @@
 class MyArray {
   constructor(...argumentsArr) {
-    const argLength = argumentsArr.length;
+    this.length = argumentsArr.length;
 
-    if (argLength === 1 && typeof argumentsArr[0] === 'number') {
+    if (this.length === 1 && typeof argumentsArr[0] === 'number') {
       for (let i = 0; i < argumentsArr[0]; i += 1) {
         this[i] = undefined;
       }
       this.length = argumentsArr[0];
     } else {
-      for (let i = 0; i < argLength; i += 1) {
+      for (let i = 0; i < this.length; i += 1) {
         this[i] = argumentsArr[i];
       }
-      this.length = argLength;
     }
   }
 
