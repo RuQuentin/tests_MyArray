@@ -1,17 +1,16 @@
 class MyArray {
   constructor(...argumentsArr) {
-    const argLength = argumentsArr.length;
+    this.length = argumentsArr.length;
 
-    if (argLength === 1 && typeof argumentsArr[0] === 'number') {
+    if (this.length === 1 && typeof argumentsArr[0] === 'number') {
       for (let i = 0; i < argumentsArr[0]; i += 1) {
         this[i] = undefined;
       }
       this.length = argumentsArr[0];
     } else {
-      for (let i = 0; i < argLength; i += 1) {
+      for (let i = 0; i < this.length; i += 1) {
         this[i] = argumentsArr[i];
       }
-      this.length = argLength;
     }
   }
 
@@ -49,27 +48,20 @@ MyArray.prototype.pop = function() {
 // ===================== FROM =====================
 MyArray.from = function(arrayLike, callback, thisArg) {
   const newArray = new MyArray();
-  const argLength = arrayLike.length;
+  newArray.length = arrayLike.length;
+  const context = thisArg !== undefined ? thisArg : this;
 
-  if (thisArg) {
-    for (let i = 0; i < argLength; i += 1) {
-      newArray[i] = callback.call(thisArg, arrayLike[i], i, arrayLike);
-    }
-  }
-
-  if (callback && !thisArg) {
-    for (let i = 0; i < argLength; i += 1) {
-      newArray[i] = callback(arrayLike[i], i, arrayLike);
+  if (callback) {
+    for (let i = 0; i < newArray.length; i += 1) {
+      newArray[i] = callback.call(context, arrayLike[i], i, arrayLike);
     }
   }
 
   if (!callback && !thisArg) {
-    for (let i = 0; i < argLength; i += 1) {
+    for (let i = 0; i < newArray.length; i += 1) {
       newArray[i] = arrayLike[i];
     }
   }
-
-  newArray.length = argLength;
 
   return newArray;
 };
@@ -77,16 +69,10 @@ MyArray.from = function(arrayLike, callback, thisArg) {
 // ===================== MAP =====================
 MyArray.prototype.map = function(callback, thisArg) {
   const newArray = new MyArray();
-  const arrLength = this.length;
+  const context = thisArg !== undefined ? thisArg : this;
 
-  if (thisArg) {
-    for (let i = 0; i < arrLength; i += 1) {
-      newArray.push(callback.call(thisArg, this[i], i, this));
-    }
-  } else {
-    for (let i = 0; i < arrLength; i++) {
-      newArray.push(callback(this[i], i, this));
-    }
+  for (let i = 0; i < this.length; i += 1) {
+    newArray.push(callback.call(context, this[i], i, this));
   }
 
   return newArray;
@@ -94,38 +80,31 @@ MyArray.prototype.map = function(callback, thisArg) {
 
 // =================== forEach ===================
 MyArray.prototype.forEach = function(callback, thisArg) {
-  const arrLength = this.length;
+  const context = thisArg !== undefined ? thisArg : this;
 
-  if (thisArg) {
-    for (let i = 0; i < arrLength; i += 1) {
-      callback.call(thisArg, this[i], i, this);
-    }
-  } else {
-    for (let i = 0; i < arrLength; i++) {
-      callback(this[i], i, this);
-    }
+  for (let i = 0; i < this.length; i += 1) {
+    callback.call(context, this[i], i, this);
   }
+
   return undefined;
 };
 
 // =================== REDUCE ====================
 MyArray.prototype.reduce = function(callback, initValue) {
-  const arrLength = this.length;
-
-  if (arrLength === 0 && initValue === undefined) {
+  if (this.length === 0 && initValue === undefined) {
     throw new TypeError('You haven`t passed any value needed');
   }
 
   let accumulator = initValue !== undefined ? initValue : this[0];
 
   if (initValue === undefined) {
-    for (let i = 1; i < arrLength; i++) {
+    for (let i = 1; i < this.length; i++) {
       accumulator = callback(accumulator, this[i], i, this);
     }
   }
 
   if (initValue !== undefined) {
-    for (let i = 0; i < arrLength; i++) {
+    for (let i = 0; i < this.length; i++) {
       accumulator = callback(accumulator, this[i], i, this);
     }
   }
@@ -135,35 +114,28 @@ MyArray.prototype.reduce = function(callback, initValue) {
 // ===================== FILTER =====================
 MyArray.prototype.filter = function(callback, thisArg) {
   const newArray = new MyArray();
-  const arrLength = this.length;
+  const context = thisArg !== undefined ? thisArg : this;
 
-  if (thisArg) {
-    for (let i = 0; i < arrLength; i += 1) {
-      if (callback.call(thisArg, this[i], i, this)) {
-        newArray.push(this[i]);
-      }
-    }
-  } else {
-    for (let i = 0; i < arrLength; i++) {
-      if (callback(this[i], i, this)) {
-        newArray.push(this[i]);
-      }
+  for (let i = 0; i < this.length; i += 1) {
+    if (callback.call(context, this[i], i, this)) {
+      newArray.push(this[i]);
     }
   }
+
   return newArray;
 };
 
 // =================== SORT ===================
 MyArray.prototype.sort = function(callback) {
-  const arrLength = this.length;
+
   let buffer = this[0];
 
   switch (callback) {
   case undefined:
-    for (let j = 0; j < arrLength; j++) {
+    for (let j = 0; j < this.length; j++) {
       let flag = 0;
 
-      for (let i = 0; i < arrLength - 1; i++) {
+      for (let i = 0; i < this.length - 1; i++) {
         if (String(this[i]) > String(this[i + 1])) {
           buffer = this[i];
           this[i] = this[i + 1];
@@ -179,10 +151,10 @@ MyArray.prototype.sort = function(callback) {
     return this;
 
   default:
-    for (let j = 0; j < arrLength; j++) {
+    for (let j = 0; j < this.length; j++) {
       let flag = 0;
 
-      for (let i = 0; i < arrLength - 1; i++) {
+      for (let i = 0; i < this.length - 1; i++) {
         if (callback(this[i], this[i + 1]) > 0) {
           buffer = this[i];
           this[i] = this[i + 1];
@@ -201,15 +173,13 @@ MyArray.prototype.sort = function(callback) {
 
 // ===================== toString =====================
 MyArray.prototype.toString = function() {
-  const arrLength = this.length;
-
-  if (arrLength === 0) {
+  if (this.length === 0) {
     return '';
   }
 
   let newString = String(this[0]);
 
-  for (let i = 1; i < arrLength; i++) {
+  for (let i = 1; i < this.length; i++) {
     newString = `${newString},${this[i]}`;
   }
 
@@ -218,25 +188,48 @@ MyArray.prototype.toString = function() {
 
 // ===================== FIND =====================
 MyArray.prototype.find = function(callback, thisArg) {
-  const arrLength = this.length;
+  const context = thisArg !== undefined ? thisArg : this;
 
-  if (thisArg) {
-    for (let i = 0; i < arrLength; i += 1) {
-      if (callback.call(thisArg, this[i], i, this)) {
-        const targetElement = this[i];
+  for (let i = 0; i < this.length; i += 1) {
+    if (callback.call(context, this[i], i, this)) {
+      const targetElement = this[i];
 
-        return targetElement;
-      }
-    }
-  } else {
-    for (let i = 0; i < arrLength; i++) {
-      if (callback(this[i], i, this)) {
-        const targetElement = this[i];
-
-        return targetElement;
-      }
+      return targetElement;
     }
   }
+};
+
+MyArray.prototype.slice = function(begin, end) {
+  const newArray = new MyArray();
+  const arrLength = this.length;
+  let from = 0;
+  let to = arrLength;
+
+  if (begin > arrLength) {
+    return newArray;
+  }
+
+  if (begin > 0) {
+    from = begin;
+  }
+
+  if (begin < 0 && Math.abs(begin) < arrLength) {
+    from = arrLength + begin;
+  }
+
+  if (end < 0) {
+    to = arrLength + end;
+  }
+
+  if (end >= 0 && end <= arrLength) {
+    to = end;
+  }
+
+  for (let i = from; i < to; i++) {
+    newArray.push(this[i]);
+  }
+
+  return newArray;
 };
 
 // ===================== REST =====================
