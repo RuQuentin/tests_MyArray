@@ -155,15 +155,14 @@ MyArray.prototype.filter = function(callback, thisArg) {
 
 // =================== SORT ===================
 MyArray.prototype.sort = function(callback) {
-  const arrLength = this.length;
   let buffer = this[String(0)];
 
   switch (callback) {
   case undefined:
-    for (let j = 0; j < arrLength; j++) {
+    for (let j = 0; j < this.length; j++) {
       let flag = 0;
 
-      for (let i = 0; i < arrLength - 1; i++) {
+      for (let i = 0; i < this.length - 1; i++) {
         if (String(this[i]) > String(this[String(i + 1)])) {
           buffer = this[i];
           this[i] = this[String(i + 1)];
@@ -179,10 +178,10 @@ MyArray.prototype.sort = function(callback) {
     return this;
 
   default:
-    for (let j = 0; j < arrLength; j++) {
+    for (let j = 0; j < this.length; j++) {
       let flag = 0;
 
-      for (let i = 0; i < arrLength - 1; i++) {
+      for (let i = 0; i < this.length - 1; i++) {
         if (callback(this[i], this[String(i + 1)]) > 0) {
           buffer = this[i];
           this[i] = this[String(i + 1)];
