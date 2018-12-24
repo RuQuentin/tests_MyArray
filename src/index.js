@@ -110,22 +110,20 @@ MyArray.prototype.forEach = function(callback, thisArg) {
 
 // =================== REDUCE ====================
 MyArray.prototype.reduce = function(callback, initValue) {
-  const arrLength = this.length;
-
-  if (arrLength === 0 && initValue === undefined) {
+  if (this.length === 0 && initValue === undefined) {
     throw new TypeError('You haven`t passed any value needed');
   }
 
   let accumulator = initValue !== undefined ? initValue : this[0];
 
   if (initValue === undefined) {
-    for (let i = 1; i < arrLength; i++) {
+    for (let i = 1; i < this.length; i++) {
       accumulator = callback(accumulator, this[i], i, this);
     }
   }
 
   if (initValue !== undefined) {
-    for (let i = 0; i < arrLength; i++) {
+    for (let i = 0; i < this.length; i++) {
       accumulator = callback(accumulator, this[i], i, this);
     }
   }
