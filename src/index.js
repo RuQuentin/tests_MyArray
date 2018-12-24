@@ -201,15 +201,13 @@ MyArray.prototype.sort = function(callback) {
 
 // ===================== toString =====================
 MyArray.prototype.toString = function() {
-  const arrLength = this.length;
-
-  if (arrLength === 0) {
+  if (this.length === 0) {
     return '';
   }
 
   let newString = String(this[String(0)]);
 
-  for (let i = 1; i < arrLength; i++) {
+  for (let i = 1; i < this.length; i++) {
     newString = `${newString},${this[i]}`;
   }
 
