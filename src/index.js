@@ -198,13 +198,13 @@ MyArray.prototype.find = function(callback, thisArg) {
   }
 };
 
+// ===================== SLICE =====================
 MyArray.prototype.slice = function(begin, end) {
   const newArray = new MyArray();
-  const arrLength = this.length;
   let from = 0;
-  let to = arrLength;
+  let to = this.length;
 
-  if (begin > arrLength) {
+  if (begin > this.length) {
     return newArray;
   }
 
@@ -212,15 +212,15 @@ MyArray.prototype.slice = function(begin, end) {
     from = begin;
   }
 
-  if (begin < 0 && Math.abs(begin) < arrLength) {
-    from = arrLength + begin;
+  if (begin < 0 && Math.abs(begin) < this.length) {
+    from = this.length + begin;
   }
 
   if (end < 0) {
-    to = arrLength + end;
+    to = this.length + end;
   }
 
-  if (end >= 0 && end <= arrLength) {
+  if (end >= 0 && end <= this.length) {
     to = end;
   }
 
@@ -252,101 +252,5 @@ MyArray.prototype.slice = function(begin, end) {
 //     }
 //   };
 // };
-
-// === Test INPUT DATA
-// const arr1 = new MyArray("sdfs", 5, { name: "ivan" }, [15, 12]);
-
-// === Test CONSTRUCTOR
-// const arr2 = new MyArray(2, "h", "uiu", 1);
-// console.log(arr2.length);
-// console.log(arr2);
-
-// === Test LENGTH
-// console.log(arr1.length);
-// console.log(arr1.hasOwnProperty(length));
-
-// === Test PUSH
-// arr1.push(6, 12);
-// console.log(arr1.push(6, 12));
-// console.log(arr1);
-
-// === Test POP
-// console.log(arr1.pop());
-// console.log(arr1);
-
-// === Test FROM
-// const objectAside = Object.create({ 0: 2 });
-// const arr2 = MyArray.from([[2, 1], { 0: 1, 1: "654" }, 3, "dsfsdf"]);
-// const arr2 = MyArray.from("sdfsdfs");
-// const arr2 = MyArray.from([1, 2, 3], someFunction, objectAside);
-// console.log(arr2);
-// const arr3 = Array.from([1, 2, 3], someFunction, objectAside);
-// console.log(arr3);
-
-// === Test MAP
-// const arr2 = new MyArray(1, 2, "abc", 4, 5);
-// function someFunction(item, index, array) {
-//   return `${item} is an element #${index}  in array ${array} and!!! ${this[0]}`;
-// return item;
-// }
-// const objectAside = Object.create({ 0: 2 });
-// const arr3 = arr2.map(item => item * 2);
-// const arr3 = arr2.map(someFunction, objectAside);
-// console.log(arr3);
-// // console.log(arr3[1] === arr2[1]);
-
-// === Test forEach
-// const objectAside = Object.create({ 0: 2 });
-// const arr2 = new MyArray(1, 2, "abc", 4, 5);
-// const arr3 = new MyArray();
-// function someFunction(item, index, array) {
-// console.log(
-// `${item} is an element #${index}  in array ${array} and!!! ${this[0]}`
-// );
-//   arr3[index] = item;
-// }
-// arr2.forEach(someFunction, objectAside);
-// console.log(arr2[1] === arr3[1]);
-
-// === Test REDUCE
-// function callback(accumulator, item) {
-//   return accumulator + item;
-// }
-// function callback(accumulator, item) {
-//   return accumulator.concat(item);
-// }
-// const initValue = 52;
-// const arr2 = new MyArray([0, 1], [2, 3], [4, 5]);
-// let b = arr2.reduce(callback, [-2, -1]);
-// console.log(b);
-
-// const initValue = 52;
-// const arr2 = [2, 3, 5];
-// let b = arr2.reduce(callback, initValue);
-// console.log(b);
-
-// === Test FILTER
-// const objectAside = Object.create({ 0: 2 });
-// const arr2 = new MyArray(1, 256, "abc", 4, 51.56);
-// function someFunction(item, index, array) {
-//   if (this[0] == 2) return Number.isInteger(item);
-// }
-// const arr3 = arr2.filter(someFunction);
-// console.log(arr3);
-
-// === Test SORT
-// const arr2 = new MyArray(5, 2, 3, 8, 6, 0, 89, 7, 90, 100, 2000);
-// arr2.sort((a, b) => a - b);
-// console.log(arr2);
-
-// === Test ToString
-// const arr2 = new MyArray([2, 1], { 0: 1, 1: "654" }, 3, "dsfsdf");
-// const arr3 = arr2.toString();
-// console.log(arr3);
-
-// === Test REST
-// const realArr = [...arr1];
-// console.log(arr1.length);
-// console.log(realArr)
 
 export default MyArray;
