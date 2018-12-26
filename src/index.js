@@ -21,6 +21,41 @@ class MyArray {
       }
     }
   }
+
+  [Symbol.toPrimitive](hint) {
+    function concatenateProperties() {
+      let newString = '';
+
+      if (this.length !== 0) {
+        newString = `${Object.keys(this)[0]}: ${Object.values(this)[0]}`;
+
+        for (let i = 1; i < 5; i++) {
+          newString = `${newString}, ${Object.keys(this)[i]}: ${Object.values(this)[i]}`;
+        }
+      }
+      return `First 5 properties are - ${newString}`;
+    }
+
+    function sumProperties() {
+      let sum = 0;
+
+      for (let i = 0; i < this.length; i++) {
+        if (typeof Object.values(this)[i] === 'number') {
+          sum += Object.values(this)[i];
+        }
+      }
+      return sum;
+    }
+
+    switch (hint) {
+    case 'string':
+      return concatenateProperties.call(this);
+    case 'number':
+      return sumProperties.call(this);
+    default:
+      return 'WTF?!';
+    }
+  }
 }
 
 // ===================== PUSH =====================
