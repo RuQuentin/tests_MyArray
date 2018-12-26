@@ -40,7 +40,7 @@ describe('tests for instance', () => {
     };
     Reflect.ownKeys(MyArray.prototype).forEach(item => delete declaratedMethods[item]);
     expect(declaratedMethods).toEqual({});
-    expect(Reflect.ownKeys(MyArray.prototype).length).toBe(12);
+    expect(Reflect.ownKeys(MyArray.prototype).length).toBe(13);
   });
 
   test('Class has only declarated static method and common like \'length\', \'prototype\', \'from\', \'name\'', () => {
