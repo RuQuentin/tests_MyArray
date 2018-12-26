@@ -127,7 +127,6 @@ MyArray.prototype.filter = function(callback, thisArg) {
 
 // =================== SORT ===================
 MyArray.prototype.sort = function(callback) {
-
   let buffer = this[0];
 
   switch (callback) {
