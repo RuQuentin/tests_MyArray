@@ -81,7 +81,7 @@ MyArray.prototype.pop = function() {
 };
 
 // ===================== FROM =====================
-MyArray.from = function(arrayLike, callback, thisArg) {
+MyArray.from = function(arrayLike, callback, thisArg = this) {
   const newArray = new MyArray();
   newArray.length = arrayLike.length;
 
@@ -95,7 +95,7 @@ MyArray.from = function(arrayLike, callback, thisArg) {
 };
 
 // ===================== MAP =====================
-MyArray.prototype.map = function(callback, thisArg) {
+MyArray.prototype.map = function(callback, thisArg = this) {
   const newArray = new MyArray();
 
   for (let i = 0; i < this.length; i += 1) {
@@ -106,7 +106,7 @@ MyArray.prototype.map = function(callback, thisArg) {
 };
 
 // =================== forEach ===================
-MyArray.prototype.forEach = function(callback, thisArg) {
+MyArray.prototype.forEach = function(callback, thisArg = this) {
   for (let i = 0; i < this.length; i += 1) {
     callback.call(thisArg, this[i], i, this);
   }
@@ -137,7 +137,7 @@ MyArray.prototype.reduce = function(callback, initValue) {
 };
 
 // ===================== FILTER =====================
-MyArray.prototype.filter = function(callback, thisArg) {
+MyArray.prototype.filter = function(callback, thisArg = this) {
   const newArray = new MyArray();
 
   for (let i = 0; i < this.length; i += 1) {
@@ -210,7 +210,7 @@ MyArray.prototype.toString = function() {
 };
 
 // ===================== FIND =====================
-MyArray.prototype.find = function(callback, thisArg) {
+MyArray.prototype.find = function(callback, thisArg = this) {
   for (let i = 0; i < this.length; i += 1) {
     if (callback.call(thisArg, this[i], i, this)) {
       const targetElement = this[i];
