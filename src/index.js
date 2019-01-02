@@ -214,7 +214,7 @@ MyArray.prototype.toString = function() {
   let newString = String(this[0]);
 
   for (let i = 1; i < this.length; i++) {
-    newString = `${newString},${this[i]}`;
+    newString += `,${this[i]}`;
   }
 
   return newString;
