@@ -266,26 +266,4 @@ MyArray.prototype.slice = function(begin, end) {
   return newArray;
 };
 
-// ===================== REST =====================
-// MyArray.prototype[Symbol.iterator] = function() {
-//   let i = 0;
-//   const arrLength = this.length;
-//   const that = this;
-
-//   return {
-//     next(arr1) {
-//       if (i < arrLength) {
-//         return {
-//           done: false,
-//           value: that[i++]
-//         };
-//       } else {
-//         return {
-//           done: true
-//         };
-//       }
-//     }
-//   };
-// };
-
 export default MyArray;
