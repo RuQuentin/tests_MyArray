@@ -160,47 +160,33 @@ MyArray.prototype.filter = function(callback, thisArg) {
 
 // =================== SORT ===================
 MyArray.prototype.sort = function(callback) {
+  function cbDefault(a, b) {
+    const result = `${a}` > `${b}` ? 1 : 0;
+
+    return result;
+  }
+
   let buffer = this[0];
+  const cb = callback ? callback : cbDefault;
 
-  switch (callback) {
-  case undefined:
-    for (let j = 0; j < this.length; j++) {
-      let flag = 0;
+  for (let j = 0; j < this.length; j++) {
+    let flag = 0;
 
-      for (let i = 0; i < this.length - 1; i++) {
-        if (String(this[i]) > String(this[i + 1])) {
-          buffer = this[i];
-          this[i] = this[i + 1];
-          this[i + 1] = buffer;
-          flag += 1;
-        }
-      }
-
-      if (flag === 0) {
-        break;
+    for (let i = 0; i < this.length - 1; i++) {
+      if (cb(this[i], this[i + 1]) > 0) {
+        buffer = this[i];
+        this[i] = this[i + 1];
+        this[i + 1] = buffer;
+        flag += 1;
       }
     }
-    return this;
 
-  default:
-    for (let j = 0; j < this.length; j++) {
-      let flag = 0;
-
-      for (let i = 0; i < this.length - 1; i++) {
-        if (callback(this[i], this[i + 1]) > 0) {
-          buffer = this[i];
-          this[i] = this[i + 1];
-          this[i + 1] = buffer;
-          flag += 1;
-        }
-      }
-
-      if (flag === 0) {
-        break;
-      }
-      return this;
+    if (flag === 0) {
+      break;
     }
   }
+
+  return this;
 };
 
 // ===================== toString =====================
