@@ -120,8 +120,6 @@ MyArray.prototype.forEach = function(callback, thisArg) {
   for (let i = 0; i < this.length; i += 1) {
     callback.call(context, this[i], i, this);
   }
-
-  return undefined;
 };
 
 // =================== REDUCE ====================
