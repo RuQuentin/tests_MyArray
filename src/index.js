@@ -84,17 +84,10 @@ MyArray.prototype.pop = function() {
 MyArray.from = function(arrayLike, callback, thisArg) {
   const newArray = new MyArray();
   newArray.length = arrayLike.length;
-  const context = thisArg !== undefined ? thisArg : this;
 
   if (callback) {
     for (let i = 0; i < newArray.length; i += 1) {
-      newArray[i] = callback.call(context, arrayLike[i], i, arrayLike);
-    }
-  }
-
-  if (!callback && !thisArg) {
-    for (let i = 0; i < newArray.length; i += 1) {
-      newArray[i] = arrayLike[i];
+      newArray[i] = callback.call(thisArg, arrayLike[i], i, arrayLike);
     }
   }
 
@@ -104,10 +97,9 @@ MyArray.from = function(arrayLike, callback, thisArg) {
 // ===================== MAP =====================
 MyArray.prototype.map = function(callback, thisArg) {
   const newArray = new MyArray();
-  const context = thisArg !== undefined ? thisArg : this;
 
   for (let i = 0; i < this.length; i += 1) {
-    newArray.push(callback.call(context, this[i], i, this));
+    newArray.push(callback.call(thisArg, this[i], i, this));
   }
 
   return newArray;
@@ -115,10 +107,8 @@ MyArray.prototype.map = function(callback, thisArg) {
 
 // =================== forEach ===================
 MyArray.prototype.forEach = function(callback, thisArg) {
-  const context = thisArg !== undefined ? thisArg : this;
-
   for (let i = 0; i < this.length; i += 1) {
-    callback.call(context, this[i], i, this);
+    callback.call(thisArg, this[i], i, this);
   }
 
   return undefined;
@@ -149,10 +139,9 @@ MyArray.prototype.reduce = function(callback, initValue) {
 // ===================== FILTER =====================
 MyArray.prototype.filter = function(callback, thisArg) {
   const newArray = new MyArray();
-  const context = thisArg !== undefined ? thisArg : this;
 
   for (let i = 0; i < this.length; i += 1) {
-    if (callback.call(context, this[i], i, this)) {
+    if (callback.call(thisArg, this[i], i, this)) {
       newArray.push(this[i]);
     }
   }
@@ -222,10 +211,8 @@ MyArray.prototype.toString = function() {
 
 // ===================== FIND =====================
 MyArray.prototype.find = function(callback, thisArg) {
-  const context = thisArg !== undefined ? thisArg : this;
-
   for (let i = 0; i < this.length; i += 1) {
-    if (callback.call(context, this[i], i, this)) {
+    if (callback.call(thisArg, this[i], i, this)) {
       const targetElement = this[i];
 
       return targetElement;
