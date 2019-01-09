@@ -211,9 +211,7 @@ MyArray.prototype.toString = function() {
 MyArray.prototype.find = function(callback, thisArg = this) {
   for (let i = 0; i < this.length; i += 1) {
     if (callback.call(thisArg, this[i], i, this)) {
-      const targetElement = this[i];
-
-      return targetElement;
+      return this[i];
     }
   }
 };
