@@ -1,62 +1,72 @@
-class MyArray {
-  constructor(...argumentsArr) {
-    this.length = argumentsArr.length;
+function MyArray(...argumentsArr) {
+  this.length = argumentsArr.length;
 
-    if (this.length === 1 && typeof argumentsArr[0] === 'number') {
-      for (let i = 0; i < argumentsArr[0]; i += 1) {
-        this[i] = undefined;
-      }
-      this.length = argumentsArr[0];
-    } else {
-      for (let i = 0; i < this.length; i += 1) {
-        this[i] = argumentsArr[i];
-      }
-    }
-  }
-
-  * [Symbol.iterator]() {
-    for (const key in this) {
-      if (Object.hasOwnProperty.call(this, key)) {
-        yield this[key];
-      }
-    }
-  }
-
-  [Symbol.toPrimitive](hint) {
-    function concatenateProperties() {
-      let newString = '';
-
-      if (this.length !== 0) {
-        newString = `${Object.keys(this)[0]}: ${Object.values(this)[0]}`;
-
-        for (let i = 1; i < 5; i++) {
-          newString = `${newString}, ${Object.keys(this)[i]}: ${Object.values(this)[i]}`;
-        }
-      }
-      return `First 5 properties are - ${newString}`;
-    }
-
-    function sumProperties() {
-      let sum = 0;
-
-      for (let i = 0; i < this.length; i++) {
-        if (typeof Object.values(this)[i] === 'number') {
-          sum += Object.values(this)[i];
-        }
-      }
-      return sum;
-    }
-
-    switch (hint) {
-    case 'string':
-      return concatenateProperties.call(this);
-    case 'number':
-      return sumProperties.call(this);
-    default:
-      return 'WTF?!';
+  if (this.length === 1 && typeof argumentsArr[0] === 'number') {
+    this.length = argumentsArr[0];
+  } else {
+    for (let i = 0; i < this.length; i += 1) {
+      this[i] = argumentsArr[i];
     }
   }
 }
+
+// =============== Symbol.toPrimitive ===============
+MyArray.prototype[Symbol.toPrimitive] = function(hint) {
+  function concatenateProperties() {
+    let newString = '';
+
+    if (this.length !== 0) {
+      newString = `${Object.keys(this)[0]}: ${Object.values(this)[0]}`;
+
+      for (let i = 1; i < 5; i++) {
+        newString = `${newString}, ${Object.keys(this)[i]}: ${Object.values(this)[i]}`;
+      }
+    }
+    return `First 5 properties are - ${newString}`;
+  }
+
+  function sumProperties() {
+    let sum = 0;
+
+    for (let i = 0; i < this.length; i++) {
+      if (typeof Object.values(this)[i] === 'number') {
+        sum += Object.values(this)[i];
+      }
+    }
+    return sum;
+  }
+
+  switch (hint) {
+  case 'string':
+    return concatenateProperties.call();
+  case 'number':
+    return sumProperties.call();
+  default:
+    return 'WTF?!';
+  }
+};
+
+// =============== Symbol.iterator ===============
+MyArray.prototype[Symbol.iterator] = function() {
+  let i = 0;
+  const that = this;
+
+  return {
+    next() {
+      if (i < that.length) {
+        i += 1;
+        return {
+          done: false,
+          value: that[i - 1]
+        };
+      } else {
+        return {
+          done: true
+        };
+      }
+    }
+  };
+};
 
 // ===================== PUSH =====================
 MyArray.prototype.push = function(...argumentsArr) {
@@ -66,17 +76,20 @@ MyArray.prototype.push = function(...argumentsArr) {
     this[this.length] = argumentsArr[i];
     this.length += 1;
   }
+
   return this.length;
 };
 
 // ===================== POP =====================
 MyArray.prototype.pop = function() {
+  if (!this.length) {
+    return undefined;
+  }
+
   const lastItem = this[this.length - 1];
   delete this[this.length - 1];
+  this.length -= 1;
 
-  if (this.length) {
-    this.length -= 1;
-  }
   return lastItem;
 };
 
@@ -89,6 +102,10 @@ MyArray.from = function(arrayLike, callback, thisArg = this) {
     for (let i = 0; i < newArray.length; i += 1) {
       newArray[i] = callback.call(thisArg, arrayLike[i], i, arrayLike);
     }
+  } else {
+    for (let i = 0; i < newArray.length; i += 1) {
+      newArray[i] = arrayLike[i];
+    }
   }
 
   return newArray;
@@ -99,7 +116,8 @@ MyArray.prototype.map = function(callback, thisArg = this) {
   const newArray = new MyArray();
 
   for (let i = 0; i < this.length; i += 1) {
-    newArray.push(callback.call(thisArg, this[i], i, this));
+    newArray[newArray.length] = callback.call(thisArg, this[i], i, this);
+    newArray.length += 1;
   }
 
   return newArray;
@@ -119,18 +137,12 @@ MyArray.prototype.reduce = function(callback, initValue) {
   }
 
   let accumulator = initValue !== undefined ? initValue : this[0];
+  let i = initValue === undefined ? 1 : 0;
 
-  if (initValue === undefined) {
-    for (let i = 1; i < this.length; i++) {
-      accumulator = callback(accumulator, this[i], i, this);
-    }
+  for (; i < this.length; i++) {
+    accumulator = callback(accumulator, this[i], i, this);
   }
 
-  if (initValue !== undefined) {
-    for (let i = 0; i < this.length; i++) {
-      accumulator = callback(accumulator, this[i], i, this);
-    }
-  }
   return accumulator;
 };
 
@@ -140,7 +152,8 @@ MyArray.prototype.filter = function(callback, thisArg = this) {
 
   for (let i = 0; i < this.length; i += 1) {
     if (callback.call(thisArg, this[i], i, this)) {
-      newArray.push(this[i]);
+      newArray[newArray.length] = this[i];
+      newArray.length += 1;
     }
   }
 
@@ -150,13 +163,11 @@ MyArray.prototype.filter = function(callback, thisArg = this) {
 // =================== SORT ===================
 MyArray.prototype.sort = function(callback) {
   function cbDefault(a, b) {
-    const result = `${a}` > `${b}` ? 1 : 0;
-
-    return result;
+    return `${a}` > `${b}` ? 1 : 0;
   }
 
   let buffer = this[0];
-  const cb = callback ? callback : cbDefault;
+  const cb = callback || cbDefault;
 
   for (let j = 0; j < this.length; j++) {
     let flag = 0;
@@ -197,9 +208,7 @@ MyArray.prototype.toString = function() {
 MyArray.prototype.find = function(callback, thisArg = this) {
   for (let i = 0; i < this.length; i += 1) {
     if (callback.call(thisArg, this[i], i, this)) {
-      const targetElement = this[i];
-
-      return targetElement;
+      return this[i];
     }
   }
 };
@@ -231,7 +240,8 @@ MyArray.prototype.slice = function(begin, end) {
   }
 
   for (let i = from; i < to; i++) {
-    newArray.push(this[i]);
+    newArray[newArray.length] = this[i];
+    newArray.length += 1;
   }
 
   return newArray;
