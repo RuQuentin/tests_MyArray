@@ -166,13 +166,11 @@ MyArray.prototype.filter = function(callback, thisArg = this) {
 // =================== SORT ===================
 MyArray.prototype.sort = function(callback) {
   function cbDefault(a, b) {
-    const result = `${a}` > `${b}` ? 1 : 0;
-
-    return result;
+    return `${a}` > `${b}` ? 1 : 0;
   }
 
   let buffer = this[0];
-  const cb = callback ? callback : cbDefault;
+  const cb = callback || cbDefault;
 
   for (let j = 0; j < this.length; j++) {
     let flag = 0;
