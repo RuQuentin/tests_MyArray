@@ -71,12 +71,14 @@ MyArray.prototype.push = function(...argumentsArr) {
 
 // ===================== POP =====================
 MyArray.prototype.pop = function() {
+  if (!this.length) {
+    return undefined;
+  }
+
   const lastItem = this[this.length - 1];
   delete this[this.length - 1];
+  this.length -= 1;
 
-  if (this.length) {
-    this.length -= 1;
-  }
   return lastItem;
 };
 
