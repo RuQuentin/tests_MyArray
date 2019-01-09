@@ -14,14 +14,6 @@ class MyArray {
     }
   }
 
-  * [Symbol.iterator]() {
-    for (const key in this) {
-      if (Object.hasOwnProperty.call(this, key)) {
-        yield this[key];
-      }
-    }
-  }
-
   [Symbol.toPrimitive](hint) {
     function concatenateProperties() {
       let newString = '';
@@ -57,6 +49,28 @@ class MyArray {
     }
   }
 }
+
+// =============== Symbol.iterator ===============
+MyArray.prototype[Symbol.iterator] = function() {
+  let i = 0;
+  const that = this;
+
+  return {
+    next() {
+      if (i < that.length) {
+        i += 1;
+        return {
+          done: false,
+          value: that[i - 1]
+        };
+      } else {
+        return {
+          done: true
+        };
+      }
+    }
+  };
+};
 
 // ===================== PUSH =====================
 MyArray.prototype.push = function(...argumentsArr) {
