@@ -76,6 +76,7 @@ MyArray.prototype.push = function(...argumentsArr) {
     this[this.length] = argumentsArr[i];
     this.length += 1;
   }
+
   return this.length;
 };
 
@@ -115,7 +116,8 @@ MyArray.prototype.map = function(callback, thisArg = this) {
   const newArray = new MyArray();
 
   for (let i = 0; i < this.length; i += 1) {
-    newArray.push(callback.call(thisArg, this[i], i, this));
+    newArray[newArray.length] = callback.call(thisArg, this[i], i, this);
+    newArray.length += 1;
   }
 
   return newArray;
@@ -150,7 +152,8 @@ MyArray.prototype.filter = function(callback, thisArg = this) {
 
   for (let i = 0; i < this.length; i += 1) {
     if (callback.call(thisArg, this[i], i, this)) {
-      newArray.push(this[i]);
+      newArray[newArray.length] = this[i];
+      newArray.length += 1;
     }
   }
 
@@ -237,7 +240,8 @@ MyArray.prototype.slice = function(begin, end) {
   }
 
   for (let i = from; i < to; i++) {
-    newArray.push(this[i]);
+    newArray[newArray.length] = this[i];
+    newArray.length += 1;
   }
 
   return newArray;
