@@ -135,18 +135,12 @@ MyArray.prototype.reduce = function(callback, initValue) {
   }
 
   let accumulator = initValue !== undefined ? initValue : this[0];
+  let i = initValue === undefined ? 1 : 0;
 
-  if (initValue === undefined) {
-    for (let i = 1; i < this.length; i++) {
-      accumulator = callback(accumulator, this[i], i, this);
-    }
+  for (; i < this.length; i++) {
+    accumulator = callback(accumulator, this[i], i, this);
   }
 
-  if (initValue !== undefined) {
-    for (let i = 0; i < this.length; i++) {
-      accumulator = callback(accumulator, this[i], i, this);
-    }
-  }
   return accumulator;
 };
 
