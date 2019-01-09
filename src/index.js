@@ -89,6 +89,10 @@ MyArray.from = function(arrayLike, callback, thisArg = this) {
     for (let i = 0; i < newArray.length; i += 1) {
       newArray[i] = callback.call(thisArg, arrayLike[i], i, arrayLike);
     }
+  } else {
+    for (let i = 0; i < newArray.length; i += 1) {
+      newArray[i] = arrayLike[i];
+    }
   }
 
   return newArray;
