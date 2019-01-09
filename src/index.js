@@ -1,16 +1,11 @@
-class MyArray {
-  constructor(...argumentsArr) {
-    this.length = argumentsArr.length;
+function MyArray(...argumentsArr) {
+  this.length = argumentsArr.length;
 
-    if (this.length === 1 && typeof argumentsArr[0] === 'number') {
-      for (let i = 0; i < argumentsArr[0]; i += 1) {
-        this[i] = undefined;
-      }
-      this.length = argumentsArr[0];
-    } else {
-      for (let i = 0; i < this.length; i += 1) {
-        this[i] = argumentsArr[i];
-      }
+  if (this.length === 1 && typeof argumentsArr[0] === 'number') {
+    this.length = argumentsArr[0];
+  } else {
+    for (let i = 0; i < this.length; i += 1) {
+      this[i] = argumentsArr[i];
     }
   }
 }
